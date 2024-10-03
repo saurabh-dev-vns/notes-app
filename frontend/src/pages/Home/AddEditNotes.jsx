@@ -11,7 +11,7 @@ const AddEditNotes = ({ noteData, type, getAllNotes, onClose }) => {
     const [content, setContent] = useState('');
     const [tags, setTags] = useState([]);
     const [error, setError] = useState(null);
-
+    const [attachments,setAttachments]=useState([]);
     useEffect(() => {
         if (type === 'edit' && noteData) {
             setTitle(noteData.title);
@@ -26,6 +26,7 @@ const AddEditNotes = ({ noteData, type, getAllNotes, onClose }) => {
                 title,
                 content,
                 tags,
+                attachments,
                 isPinned: false
             });
 
@@ -161,7 +162,7 @@ const AddEditNotes = ({ noteData, type, getAllNotes, onClose }) => {
 
             <div className='flex flex-col gap-2 mt-4'>
                 <label className='font-medium md:text-base'>Attach File</label>
-                <AttachmentInput/>
+                <AttachmentInput attachments={attachments} setAttachments={setAttachments}/>
             </div>
 
             {error && <p className='text-red-500 mt-2'>{error}</p>}
