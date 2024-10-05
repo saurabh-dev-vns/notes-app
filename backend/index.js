@@ -8,7 +8,8 @@ const dotenv = require("dotenv");
 const path = require("path");
 const { OAuth2Client } = require('google-auth-library');
 const cors = require('cors');
-
+const User = require("./models/userModel");
+const Note = require("./models/noteModel");
 const app = express();
 
 const envPath =
@@ -583,6 +584,30 @@ app.put(
     }
   }
 );
+
+//get all users
+app.get("/users-data", async (req,res)=>{
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res
+    .status(HTTP_STATUS.BAD_REQUEST)
+    .json({"msg":"Unable to get users",error});
+  }
+});
+
+//get all notes
+app.get("/notes-data", async (req,res) => {
+try {
+  const notes = await Note.find();
+  res.json(notes);
+} catch (error) {
+  res
+  .status(HTTP_STATUS.BAD_REQUEST)
+  .json({"msg":"Unable to get notes",error});
+}
+});
 
 //google oauth
 app.post("/google-auth", async (req, res) => {
